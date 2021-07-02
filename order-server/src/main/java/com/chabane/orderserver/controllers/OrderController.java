@@ -46,16 +46,16 @@ public class OrderController {
 //        return orders;
 //    }
 //
-//    @GetMapping(value = "/orders/{id}")
-//    public Order getOrder(@PathVariable("id") int id) {
-//        Order order = orderDao.findById(id);
-//
+    @GetMapping(value = "/orders/{id}")
+    public Order getOrder(@PathVariable("id") int id) {
+        Order order = orderDao.findById(id);
+
 //        for(OrderDetails details: order.getOrderDetails()) {
 //            details.setProduct(productProxy.getProduct(details.getProductId()));
 //        }
-//
-//        return order;
-//    }
+
+        return order;
+    }
 //
 //    private int getDeliveryManId() {
 //
