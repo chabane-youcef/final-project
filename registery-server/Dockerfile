@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
-WORKDIR /opt
-ENV PORT 8761
-EXPOSE 8080
-COPY target/*.jar /opt/app.jar
-ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
+EXPOSE 8761
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+COPY --from=build /home/app/target/war_name.war app.war
+ENTRYPOINT ["java","-jar","/app.war"]
