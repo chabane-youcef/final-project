@@ -1,5 +1,6 @@
 package com.chabane.employeesever.Controllers;
 
+import com.chabane.employeesever.Enums.EmployeeStatus;
 import com.chabane.employeesever.dao.EmployeeDao;
 import com.chabane.employeesever.exceptions.EmployeeNotFoundException;
 import com.chabane.employeesever.models.Employee;
@@ -37,6 +38,16 @@ public class EmployeeController {
         return employee;
     }
 
+    @GetMapping(value = "employees/firstAvailableEmployee")
+    public Employee getAvailableEmployee() {
+
+        Employee employee = employeeDao.findByStatus(EmployeeStatus.AVAILABLE);
+
+        if (employee == null) throw new EmployeeNotFoundException();
+
+        return employee;
+    }
+
     @GetMapping(value = "employee-by-email/{email}")
     public Employee show(@PathVariable("email") String email) {
 
@@ -47,7 +58,7 @@ public class EmployeeController {
         return employee;
     }
 
-    @PostMapping(value = "employees")
+    @PostMapping(value = "/employees")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee store(@Valid @RequestBody Employee employee) {
 

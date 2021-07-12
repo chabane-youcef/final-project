@@ -1,5 +1,6 @@
 package com.chabane.employeesever.dao;
 
+import com.chabane.employeesever.Enums.EmployeeStatus;
 import com.chabane.employeesever.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer> {
     Employee findById(int id);
     Employee findByEmail(String email);
     List<Employee> findAllByRole(String role);
+    Employee findByStatus(EmployeeStatus employeeStatus);
     void deleteById(int id);
 }
