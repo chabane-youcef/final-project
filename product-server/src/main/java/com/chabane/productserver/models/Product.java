@@ -23,7 +23,6 @@ public class Product {
     @Min(value = 1, message = "le prix doit etre superieur a 1")
     private int price;
 
-    @NotBlank(message = "l'image est requis")
     private String image;
 
     @NotBlank(message = "categories est requis")

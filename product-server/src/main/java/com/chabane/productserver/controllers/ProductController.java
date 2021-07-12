@@ -21,18 +21,13 @@ public class ProductController {
     private Environment environment;
 
     //TODO: refactor this composition to gateway server
-//    @GetMapping(value = "products")
-//    public List<Product> allProducts() {
-//
-//        List<Product> products = productDao.findAll();
-//        for(Product product: products) {
-//            product.setImage(getImageFullUrl(product.getImage()));
-//            product.setCategoriesObjects(
-//                    categoryProxy.categoriesByIds(product.getCategories())
-//            );
-//        }
-//        return products;
-//    }
+    @GetMapping(value = "products")
+    public List<Product> allProducts() {
+
+        List<Product> products = productDao.findAll();
+
+        return products;
+    }
 
     @GetMapping(value = "products/{id}")
     public Product show(@PathVariable("id") int id) {
