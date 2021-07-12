@@ -13,12 +13,11 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private int clientId;
-    private int deliveryManId;
-    private String address;
+//    private String address;
 
     @Temporal(TemporalType.DATE)
     private Date orderDate;

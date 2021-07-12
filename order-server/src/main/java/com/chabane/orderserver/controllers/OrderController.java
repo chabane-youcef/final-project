@@ -53,7 +53,7 @@ public class OrderController {
 //        for(OrderDetails details: order.getOrderDetails()) {
 //            details.setProduct(productProxy.getProduct(details.getProductId()));
 //        }
-
+//        System.out.println(order);
         return order;
     }
 //
@@ -72,24 +72,24 @@ public class OrderController {
 //        return delivery.get(0);
 //    }
 
-//    @PostMapping(value = "orders")
-//    public Order store(@RequestBody Order order) {
-//
-//        System.out.println(order);
-//        Date date = new Date(System.currentTimeMillis());
-//        order.setStatus(OrderStatus.PENDING);
-//        order.setOrderDate(date);
+    @PostMapping(value = "orders")
+    public Order store(@RequestBody Order order) {
+
+        System.out.println(order);
+        Date date = new Date(System.currentTimeMillis());
+        order.setStatus(OrderStatus.PENDING);
+        order.setOrderDate(date);
 //        order.setDeliveryManId(getDeliveryManId());
-//        order = orderDao.save(order);
-//
-//        return storeOrderDetails(order, order.getOrderDetails());
-//    }
+        order = orderDao.save(order);
+
+        return storeOrderDetails(order, order.getOrderDetails());
+    }
 
     private Order storeOrderDetails(Order order, List<OrderDetails> details) {
 
         Order orderCopy = new Order();
         orderCopy.setId(order.getId());
-        orderCopy.setAddress(order.getAddress());
+//        orderCopy.setAddress(order.getAddress());
         orderCopy.setOrderDate(order.getOrderDate());
         orderCopy.setStatus(order.getStatus());
 

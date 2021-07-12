@@ -11,10 +11,10 @@ import java.util.List;
 public interface OrderDao extends JpaRepository<Order, Integer> {
     List<Order> findAll();
     List<Order> findAllByClientId(int id);
-    List<Order> findAllByDeliveryManId(int id);
+//    List<Order> findAllByDeliveryManId(int id);
     Order findById(int id);
     void deleteById(int id);
 
-    @Query("SELECT o.deliveryManId FROM Order AS o GROUP BY o.deliveryManId ORDER BY COUNT(o.deliveryManId) ASC")
-    List<Integer> countTotalOrdersByDeliveryMan();
+//    @Query("SELECT o.deliveryManId FROM Order AS o GROUP BY o.deliveryManId ORDER BY COUNT(o.deliveryManId) ASC")
+//    List<Integer> countTotalOrdersByDeliveryMan();
 }
