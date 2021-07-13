@@ -1,8 +1,14 @@
 package com.chabane.gatewayserver;
 
 import com.chabane.gatewayserver.models.Delivery;
+import com.chabane.gatewayserver.services.employee.Employee;
 import com.chabane.gatewayserver.services.employee.EmployeeIntegrationService;
+import com.chabane.gatewayserver.services.employee.EmployeeSex;
+import com.chabane.gatewayserver.services.employee.EmployeeStatus;
+import com.chabane.gatewayserver.services.order.Order;
+import com.chabane.gatewayserver.services.order.OrderDetails;
 import com.chabane.gatewayserver.services.order.OrderIntegrationService;
+import com.chabane.gatewayserver.services.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,17 +17,21 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 import rx.Observable;
 import rx.Observer;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @SpringBootApplication
 @EnableEurekaClient
 @EnableZuulProxy
 @EnableHystrix
+@RestController
 public class GatewayServerApplication {
 
     public static void main(String[] args) {
@@ -40,11 +50,11 @@ public class GatewayServerApplication {
     @Autowired
     EmployeeIntegrationService employeeIntegrationService;
 
-    @RequestMapping(value = "/orders/order-delivery", params = {"orderId", "employeeId", "address"})
+    @GetMapping(value = "/order/order-delivery")
     public DeferredResult<Delivery> deliveryDetails
-            (@PathVariable int orderId, @PathVariable int employeeId, @PathVariable String address) {
+            (@RequestParam int orderId, @RequestParam String address) {
         Observable<Delivery> delivery = Observable.zip(orderIntegrationService.getOrder(orderId),
-                employeeIntegrationService.getEmployee(employeeId), (order, employee) -> {
+                employeeIntegrationService.getEmployee(), (order, employee) -> {
                     Delivery deliverOrder = new Delivery();
                     deliverOrder.setAddress(address);
                     deliverOrder.setOrder(order);

@@ -10,4 +10,5 @@ public class Employee {
     private String fullName;
     private String phone;
     private EmployeeSex sex;
+    private EmployeeStatus status;
 }

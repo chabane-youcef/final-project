@@ -21,6 +21,7 @@ public class OrderIntegrationService {
     @HystrixCommand(fallbackMethod = "stubOrder")
     public Observable<Order> getOrder(final int orderId){
         HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
         HttpEntity<String> request = new HttpEntity<String>(headers);
 
         return Observable.create(new Observable.OnSubscribe<Order>(){
@@ -28,7 +29,7 @@ public class OrderIntegrationService {
             public void call(Subscriber<? super Order> observer){
                 try {
                     if(!observer.isUnsubscribed()){
-                        observer.onNext(restTemplate.exchange("http://oder-server/orders/{id}",
+                        observer.onNext(restTemplate.exchange("http://localhost:8887/order-server/orders/{id}",
                                 HttpMethod.GET,request, Order.class,orderId).getBody());
                         observer.onCompleted();
                     }
@@ -39,7 +40,8 @@ public class OrderIntegrationService {
         });
     }
 
-    private Order stubOrder(final String orderId){
+    @SuppressWarnings("unused")
+    private Order stubOrder(final int orderId){
         Order stub = new Order();
         stub.setId(0);
         stub.setClientId(0);

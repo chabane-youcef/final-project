@@ -12,7 +12,7 @@ public class Order {
     private int id;
     private int clientId;
 
-    private Date orderDate;
+    private String orderDate;
 
     private OrderStatus status;
     private List<OrderDetails> orderDetails;
